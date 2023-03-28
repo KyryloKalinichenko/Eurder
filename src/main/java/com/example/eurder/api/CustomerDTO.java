@@ -1,34 +1,30 @@
-package com.example.eurder.domain.customer;
+package com.example.eurder.api;
 
-import com.example.eurder.api.CustomerDTO;
 import com.example.eurder.domain.address.Address;
+import com.example.eurder.domain.customer.Customer;
 
-public class Customer {
+public class CustomerDTO {
 
-    private int id;
     private String firstname;
     private String lastname;
     private String email;
     private Address address;
     private String phoneNumber;
-    private static int counter;
 
-    public Customer(String firstname, String lastname, String email, Address address, String phoneNumber) {
+    public CustomerDTO(String firstname, String lastname, String email, Address address, String phoneNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        id = counter++;
     }
 
-    public Customer(CustomerDTO customerDTO) {
-        this.firstname = customerDTO.getFirstname();
-        this.lastname = customerDTO.getLastname();
-        this.email = customerDTO.getEmail();
-        this.address = customerDTO.getAddress();
-        this.phoneNumber = customerDTO.getPhoneNumber();
-        id = counter++;
+    public CustomerDTO(Customer customer) {
+        this.firstname = customer.getFirstname();
+        this.lastname = customer.getLastname();
+        this.email = customer.getEmail();
+        this.address = customer.getAddress();
+        this.phoneNumber = customer.getPhoneNumber();
     }
 
     public String getFirstname() {
