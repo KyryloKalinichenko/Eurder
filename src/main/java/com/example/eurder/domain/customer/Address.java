@@ -1,4 +1,7 @@
-package com.example.eurder.domain.address;
+package com.example.eurder.domain.customer;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class Address {
     private String country;
@@ -7,6 +10,10 @@ public class Address {
     private int homeNumber;
 
     public Address(String country, String city, String postCode, int homeNumber) {
+
+        if (country == null || city == null || postCode == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Address should be filled.");
+        }
         this.country = country;
         this.city = city;
         this.postCode = postCode;

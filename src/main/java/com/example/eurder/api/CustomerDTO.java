@@ -1,49 +1,54 @@
 package com.example.eurder.api;
 
-import com.example.eurder.domain.address.Address;
+import com.example.eurder.domain.customer.Address;
+import com.example.eurder.domain.customer.Contact;
 import com.example.eurder.domain.customer.Customer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.server.ResponseStatusException;
 
 public class CustomerDTO {
 
     private String firstname;
     private String lastname;
-    private String email;
     private Address address;
-    private String phoneNumber;
+    private Contact contact;
 
-    public CustomerDTO(String firstname, String lastname, String email, Address address, String phoneNumber) {
+    public CustomerDTO(String firstname, String lastname, Contact contact, Address address) {
+        if (firstname == null || lastname == null
+                || contact == null || address == null){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "First and lastnames should be filled.");
+        }
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
+        this.contact = contact;
         this.address = address;
-        this.phoneNumber = phoneNumber;
+
     }
 
     public CustomerDTO(Customer customer) {
         this.firstname = customer.getFirstname();
         this.lastname = customer.getLastname();
-        this.email = customer.getEmail();
         this.address = customer.getAddress();
-        this.phoneNumber = customer.getPhoneNumber();
+        this.contact = customer.getContact();
     }
 
     public String getFirstname() {
         return firstname;
     }
 
+    public Contact getContact() {
+        return contact;
+    }
+
     public String getLastname() {
         return lastname;
     }
 
-    public String getEmail() {
-        return email;
-    }
+
 
     public Address getAddress() {
         return address;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 }
