@@ -1,12 +1,9 @@
-package com.example.eurder.api;
+package com.example.eurder.api.customer;
 
 import com.example.eurder.service.CustomerService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

@@ -1,6 +1,6 @@
 package com.example.eurder.domain.customer;
 
-import com.example.eurder.api.CustomerDTO;
+import com.example.eurder.api.customer.CustomerDTO;
 import com.example.eurder.domain.user.User;
 
 public class Customer extends User {

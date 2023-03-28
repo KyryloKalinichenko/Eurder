@@ -1,6 +1,6 @@
 package com.example.eurder.service;
 
-import com.example.eurder.api.CustomerDTO;
+import com.example.eurder.api.customer.CustomerDTO;
 import com.example.eurder.domain.customer.Customer;
 
 import java.util.ArrayList;

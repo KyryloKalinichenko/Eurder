@@ -1,4 +1,4 @@
-package com.example.eurder.api;
+package com.example.eurder.api.customer;
 
 import com.example.eurder.domain.customer.Address;
 import com.example.eurder.domain.customer.Contact;

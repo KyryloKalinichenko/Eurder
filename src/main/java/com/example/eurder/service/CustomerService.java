@@ -1,13 +1,11 @@
 package com.example.eurder.service;
 
-import com.example.eurder.api.CustomerDTO;
+import com.example.eurder.api.customer.CustomerDTO;
 import com.example.eurder.domain.repositories.CustomerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
