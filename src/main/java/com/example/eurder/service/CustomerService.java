@@ -23,11 +23,17 @@ public class CustomerService {
         return CustomerMapper.CustomerToDTO(repository.addCustomer(CustomerMapper.DTOtoCustomer(customerDTO)));
     }
 
-    public List<CustomerDTO> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers(String token) {
+        if (token == null || !token.equals("admin")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied!");
+        }
         return CustomerMapper.CustomerToDTO(repository.getCustomers());
     }
 
-    public CustomerDTO getCustomer(int id) {
+    public CustomerDTO getCustomer(int id, String token) {
+        if (token == null || !token.equals("admin")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied!");
+        }
         try {
             return CustomerMapper.CustomerToDTO(repository.getCustomerById(id));
         } catch (RuntimeException e){
