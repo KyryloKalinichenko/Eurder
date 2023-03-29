@@ -2,6 +2,7 @@ package com.example.eurder.service;
 
 import com.example.eurder.api.customer.CustomerDTO;
 import com.example.eurder.domain.repositories.CustomerRepository;
+import com.example.eurder.service.mappers.CustomerMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

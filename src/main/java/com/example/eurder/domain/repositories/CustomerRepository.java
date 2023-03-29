@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Repository
 public class CustomerRepository {
 
-    private ArrayList<Customer> customers = new ArrayList<>();
+    private final ArrayList<Customer> customers = new ArrayList<>();
 
     public Customer addCustomer(Customer customer){
         customers.add(customer);
@@ -22,7 +22,7 @@ public class CustomerRepository {
         return customers;
     }
 
-    public Customer getCustomerById(int id) {
+    public Customer getCustomerById(int id) throws RuntimeException{
         return customers.stream().filter(x -> x.getId()==id).findFirst().orElseThrow(RuntimeException::new);
     }
 }
