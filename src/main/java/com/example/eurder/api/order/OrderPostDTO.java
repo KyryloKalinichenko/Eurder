@@ -8,18 +8,16 @@ import java.util.List;
 public class OrderPostDTO {
 
     private List<ItemGroupPostDTO> itemGroups;
-    private int CustomerId;
 
-    public OrderPostDTO(List<ItemGroupPostDTO> itemGroups, int customerId) {
+    public OrderPostDTO(List<ItemGroupPostDTO> itemGroups) {
         this.itemGroups = itemGroups;
-        CustomerId = customerId;
+    }
+
+    public OrderPostDTO() {
     }
 
     public List<ItemGroupPostDTO> getItemGroups() {
         return itemGroups;
     }
 
-    public int getCustomerId() {
-        return CustomerId;
-    }
 }

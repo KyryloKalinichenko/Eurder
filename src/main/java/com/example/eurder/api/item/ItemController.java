@@ -17,7 +17,7 @@ public class ItemController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ItemDTO addItem(@RequestBody Item item, @RequestHeader String token){
+    public ItemGetDTO addItem(@RequestBody ItemPostDTO item, @RequestHeader String token){
         return service.addItem(item, token);
     }
 }

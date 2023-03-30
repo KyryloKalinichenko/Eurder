@@ -1,6 +1,7 @@
 package com.example.eurder.service;
 
-import com.example.eurder.api.item.ItemDTO;
+import com.example.eurder.api.item.ItemGetDTO;
+import com.example.eurder.api.item.ItemPostDTO;
 import com.example.eurder.domain.item.Item;
 import com.example.eurder.domain.repositories.ItemRepository;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ public class ItemService {
         this.repository = repository;
     }
 
-    public ItemDTO addItem(Item item, String token) {
+    public ItemGetDTO addItem(ItemPostDTO item, String token) {
         if (token == null || !token.equals("admin")){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied!");
         }
-        return new ItemDTO(repository.addNewType(item));
+        return new ItemGetDTO(repository.addNewType(new Item(item)));
     }
 }

@@ -34,11 +34,11 @@ public class OrderService {
         this.itemRepository = itemRepository;
     }
 
-    public OrderGetDTO submitNewOrder(OrderPostDTO postDTO){
+    public OrderGetDTO submitNewOrder(OrderPostDTO postDTO, int customerId){
 
-        validateInput(postDTO);
+        validateInput(postDTO, customerId);
 
-        Customer owner = getCustomerById(postDTO.getCustomerId());
+        Customer owner = getCustomerById(customerId);
         ArrayList<ItemGroup> itemGroups = getItemGroupsFromPostDTO(postDTO.getItemGroups());
 
         Order order = orderRepository.addNewOrder(
@@ -86,10 +86,10 @@ public class OrderService {
         return owner;
     }
 
-    private void validateInput(OrderPostDTO postDTO) {
-        if (postDTO.getItemGroups() == null || postDTO.getCustomerId() < 0)
+    private void validateInput(OrderPostDTO postDTO, int customerId) {
+        if (postDTO.getItemGroups() == null || customerId < 0)
         {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all fields were filled.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all fields were filled or input is not acceptable.");
         }
     }
 

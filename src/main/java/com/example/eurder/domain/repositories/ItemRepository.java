@@ -4,6 +4,7 @@ import com.example.eurder.domain.item.Item;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ItemRepository {
@@ -23,5 +24,9 @@ public class ItemRepository {
         Item item = getItemById(itemId);
         item.decriesStock(amount);
         items.set(items.indexOf(item), item);
+    }
+
+    public List<Item> getAllItems(){
+        return items;
     }
 }

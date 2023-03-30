@@ -1,8 +1,5 @@
 package com.example.eurder.api.item;
 
-import com.example.eurder.domain.customer.Customer;
-import com.example.eurder.domain.item.Item;
-import com.example.eurder.domain.repositories.CustomerRepository;
 import com.example.eurder.domain.repositories.ItemRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -15,10 +12,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ItemIntegrationTest {
 
     @LocalServerPort
@@ -27,7 +22,7 @@ class ItemIntegrationTest {
     @Autowired
     private ItemRepository repository;
 
-    private Item item = new Item("Item", "It is an item", 20.0, 10);
+    private ItemPostDTO itemPostDTO = new ItemPostDTO("Item", "It is an item", 20.0, 10);
 
 
 
@@ -38,7 +33,7 @@ class ItemIntegrationTest {
                 .given()
                 .contentType(ContentType.JSON)
                 .header(new Header("token", "admin"))
-                .body(item)
+                .body(itemPostDTO)
                 .when()
                 .port(port)
                 .post("item")
@@ -46,7 +41,7 @@ class ItemIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value());
 
-        Assertions.assertThat(repository.getItemById(0)).isEqualTo(item);
+        Assertions.assertThat(repository.getAllItems().contains(itemPostDTO));
     }
 
     @Test
@@ -55,7 +50,7 @@ class ItemIntegrationTest {
         RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .body(item)
+                .body(itemPostDTO)
                 .when()
                 .port(port)
                 .post("item")

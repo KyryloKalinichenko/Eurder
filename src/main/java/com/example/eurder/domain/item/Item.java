@@ -1,5 +1,7 @@
 package com.example.eurder.domain.item;
 
+import com.example.eurder.api.item.ItemPostDTO;
+
 import java.util.Objects;
 
 public class Item {
@@ -9,6 +11,14 @@ public class Item {
     private double price;
     private int amount;
     private static int counter;
+
+    public Item(ItemPostDTO item) {
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.price = item.getPrice();
+        this.amount = item.getAmount();
+        id = counter++;
+    }
 
     public int getId() {
         return id;
