@@ -143,4 +143,45 @@ class CustomerIntegrationTest {
 
 
     }
+
+    @Test
+    void getAllUnauthorised() {
+        Customer customerIvan = new Customer(customerDTOIvan);
+        Customer customerJon = new Customer(customerDTOJon);
+
+        repository.addCustomer(customerIvan);
+        repository.addCustomer(customerJon);
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .when()
+                .port(port)
+                .get("customer/all")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
+    @Test
+    void getAll_WrongToken() {
+        Customer customerIvan = new Customer(customerDTOIvan);
+        Customer customerJon = new Customer(customerDTOJon);
+
+        repository.addCustomer(customerIvan);
+        repository.addCustomer(customerJon);
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header(new Header("token", "bla"))
+                .when()
+                .port(port)
+                .get("customer/all")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+
+    }
 }
