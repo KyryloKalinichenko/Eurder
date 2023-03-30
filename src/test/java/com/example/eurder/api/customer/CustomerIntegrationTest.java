@@ -39,6 +39,32 @@ class CustomerIntegrationTest {
 
 
     @Test
+    void getCustomerByIdAsAdmin() {
+
+        Customer customerIvan = new Customer(customerDTOIvan);
+        Customer customerJon = new Customer(customerDTOJon);
+
+        repository.addCustomer(customerIvan);
+        repository.addCustomer(customerJon);
+
+        CustomerDTO toVerify = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header(new Header("token", "admin"))
+                .when()
+                .port(port)
+                .get("customer/2")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(CustomerDTO.class);
+
+        Assertions.assertThat(toVerify).isEqualTo(customerDTOIvan);
+
+    }
+
+    @Test
     void createNewCustomer() {
 
         RestAssured
@@ -81,9 +107,5 @@ class CustomerIntegrationTest {
         Assertions.assertThat(list).containsExactlyInAnyOrder(customerDTOIvan, customerDTOJon);
 
 
-    }
-
-    @Test
-    void getById() {
     }
 }
