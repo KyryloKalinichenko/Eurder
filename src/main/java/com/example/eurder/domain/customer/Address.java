@@ -3,6 +3,8 @@ package com.example.eurder.domain.customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 public class Address {
     private String country;
     private String city;
@@ -34,5 +36,18 @@ public class Address {
 
     public int getHomeNumber() {
         return homeNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return homeNumber == address.homeNumber && country.equals(address.country) && city.equals(address.city) && postCode.equals(address.postCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(country, city, postCode, homeNumber);
     }
 }

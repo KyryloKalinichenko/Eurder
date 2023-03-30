@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 public class CustomerDTO {
 
     private String firstname;
@@ -51,4 +53,16 @@ public class CustomerDTO {
         return address;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerDTO that = (CustomerDTO) o;
+        return firstname.equals(that.firstname) && lastname.equals(that.lastname) && address.equals(that.address) && contact.equals(that.contact);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname, lastname, address, contact);
+    }
 }
