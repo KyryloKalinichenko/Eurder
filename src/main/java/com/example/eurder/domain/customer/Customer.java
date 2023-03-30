@@ -39,7 +39,8 @@ public class Customer extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return address.equals(customer.address) && contact.equals(customer.contact);
+        return address.equals(customer.address) && contact.equals(customer.contact) &&
+                getFirstname().equals(customer.getFirstname()) && getLastname().equals(customer.getLastname());
     }
 
     @Override

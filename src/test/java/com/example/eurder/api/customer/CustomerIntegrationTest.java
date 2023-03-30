@@ -65,6 +65,23 @@ class CustomerIntegrationTest {
     }
 
     @Test
+    void whenThereIsNoCustomer_getCustomerByIdAsAdmin() {
+
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header(new Header("token", "admin"))
+                .when()
+                .port(port)
+                .get("customer/8756")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+
+    }
+
+    @Test
     void createNewCustomer() {
 
         RestAssured
@@ -78,7 +95,25 @@ class CustomerIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.CREATED.value());
 
-    Assertions.assertThat(repository.getCustomers().contains(new Customer(customerDTOIvan)));
+        Assertions.assertThat(repository.getCustomers().contains(new Customer(customerDTOIvan)));
+    }
+
+    @Test
+    void createNewCustomer_WhenHeIsThereAlready() {
+        Customer customerIvan = new Customer(customerDTOIvan);
+
+        repository.addCustomer(customerIvan);
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(customerDTOIvan)
+                .when()
+                .port(port)
+                .post("customer")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
