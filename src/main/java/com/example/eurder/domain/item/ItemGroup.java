@@ -1,26 +1,35 @@
 package com.example.eurder.domain.item;
 
-import com.example.eurder.api.item.ItemGroupPostDTO;
-import com.example.eurder.domain.item.Item;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class ItemGroup {
     private Item item;
     private int amount;
-    private double total;
     private LocalDate shippingDate;
+
+    public static final int DELAY_WHEN_OUT_OF_STOCK = 7;
+    public static final int NORMAL_DELAY = 1;
 
     public LocalDate getShippingDate() {
         return shippingDate;
     }
 
-    public ItemGroup(Item item, int amount, LocalDate shippingDate) {
+    public ItemGroup(Item item, int amount) {
+        if (item == null || amount < 1)
+        {
+            throw new IllegalArgumentException("Item cannot be null and amount should be bigger that 0");
+        }
+
         this.item = item;
         this.amount = amount;
-        this.total = amount * item.getPrice();
-        this.shippingDate = shippingDate;
+        this.shippingDate = calculateShipping();
+    }
+
+    private LocalDate calculateShipping() {
+        if (item.getAmount() < amount){
+            return LocalDate.now().plusDays(DELAY_WHEN_OUT_OF_STOCK);
+        }
+        return LocalDate.now().plusDays(NORMAL_DELAY);
     }
 
     public Item getItem() {
@@ -31,7 +40,7 @@ public class ItemGroup {
         return amount;
     }
 
-    public double getTotal() {
-        return total;
+    public double getTotalPrice() {
+        return amount * item.getPrice();
     }
 }

@@ -22,8 +22,7 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    public static final int DELAY_WHEN_OUT_OF_STOCK = 7;
-    public static final int NORMAL_DELAY = 1;
+
     private OrderRepository orderRepository;
     private CustomerRepository customerRepository;
     private ItemRepository itemRepository;
@@ -48,7 +47,7 @@ public class OrderService {
     }
 
     private static Double getTotalFromListOfItemGroups(ArrayList<ItemGroup> itemGroups) {
-        return itemGroups.stream().reduce(0.0, (total, current) -> total + current.getTotal(), Double::sum);
+        return itemGroups.stream().reduce(0.0, (total, current) -> total + current.getTotalPrice(), Double::sum);
     }
 
     private ArrayList<ItemGroup> getItemGroupsFromPostDTO(List<ItemGroupPostDTO> itemGroupPostDTOs) {
@@ -56,11 +55,10 @@ public class OrderService {
         ArrayList<ItemGroup> result = new ArrayList<>();
         for (ItemGroupPostDTO postDTO: itemGroupPostDTOs) {
             Item currentItem = getItemById(postDTO);
-            LocalDate shippingDay = calculateShippingDateForAnItemGroup(postDTO);
 
             itemRepository.decriesStock(postDTO.getItemId(), postDTO.getAmount());
 
-            result.add(new ItemGroup(currentItem, postDTO.getAmount(), shippingDay));
+            result.add(new ItemGroup(currentItem, postDTO.getAmount()));
         }
         return result;
     }
@@ -95,10 +93,4 @@ public class OrderService {
 
 
 
-    private LocalDate calculateShippingDateForAnItemGroup(ItemGroupPostDTO postDTO) {
-        if (itemRepository.getItemById(postDTO.getItemId()).getAmount() < postDTO.getAmount()){
-            return LocalDate.now().plusDays(DELAY_WHEN_OUT_OF_STOCK);
-        }
-        return LocalDate.now().plusDays(NORMAL_DELAY);
-    }
 }

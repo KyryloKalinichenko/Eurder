@@ -50,7 +50,7 @@ class OrderIntegrationTest {
 
 
     private OrderPostDTO postDTO = new OrderPostDTO(
-            List.of(new ItemGroupPostDTO(0, 2), new ItemGroupPostDTO(1, 2)));
+            List.of(new ItemGroupPostDTO(normalItem.getId(), 2), new ItemGroupPostDTO(noStockItem.getId(), 2)));
 
     @Test
     void newOrder_BadRequest() {
@@ -73,18 +73,19 @@ class OrderIntegrationTest {
     @Test
     void newOrder_GoodRequest() {
         itemRepository.addNewType(normalItem);
+        itemRepository.addNewType(noStockItem);
         customerRepository.addCustomer(customer);
 
         RestAssured
                 .given()
                 .contentType(ContentType.JSON)
-                .header(new Header("customerId", "1"))
+                .header(new Header("customerId", ""+customer.getId()))
                 .body(postDTO)
                 .when()
                 .port(port)
                 .post("order/new")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+                .statusCode(HttpStatus.CREATED.value());
     }
 }

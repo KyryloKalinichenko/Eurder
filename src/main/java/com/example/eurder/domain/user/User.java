@@ -13,6 +13,7 @@ public class User {
         id = counter++;
     }
 
+
     public int getId() {
         return id;
     }
