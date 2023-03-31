@@ -46,7 +46,7 @@ class OrderIntegrationTest {
 
 
     private Item normalItem = new Item("Item", "it is an item", 20.0, 10);
-    private Item noStockItem = new Item("Item", "it is an item", 20.0, 0);
+    private Item noStockItem = new Item("Item2", "it is an item2", 21.0, 0);
 
 
     private OrderPostDTO postDTO = new OrderPostDTO(

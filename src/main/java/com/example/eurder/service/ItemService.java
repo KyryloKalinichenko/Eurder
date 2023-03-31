@@ -18,9 +18,13 @@ public class ItemService {
     }
 
     public ItemGetDTO addItem(ItemPostDTO item, String token) {
+        tokenVerification(token);
+        return new ItemGetDTO(repository.addNewType(new Item(item)));
+    }
+
+    private static void tokenVerification(String token) {
         if (token == null || !token.equals("admin")){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied!");
         }
-        return new ItemGetDTO(repository.addNewType(new Item(item)));
     }
 }

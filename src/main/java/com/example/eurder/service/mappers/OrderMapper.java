@@ -8,13 +8,6 @@ import com.example.eurder.domain.order.Order;
 import java.time.LocalDate;
 
 public class OrderMapper {
-    /*
-        TODO
-
-        Order -> GetDTO
-    */
-
-
 
     public static OrderGetDTO fromOrderToGetDTO(Order order){
         return new OrderGetDTO(order);

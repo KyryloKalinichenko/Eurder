@@ -38,7 +38,7 @@ class CustomerIntegrationTest {
             new Address("Belgium", "Brussels", "1188", 6));
 
     @Test
-    void getCustomerByIdAsAdmin() {
+    void getCustomerById_AsAdmin() {
 
         Customer customerIvan = new Customer(customerDTOIvan);
         Customer customerJon = new Customer(customerDTOJon);
