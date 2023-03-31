@@ -8,6 +8,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,21 +24,19 @@ import java.util.List;
 class CustomerIntegrationTest {
 
     @LocalServerPort
-    private int port;
+    protected int port;
 
     @Autowired
-    private CustomerRepository repository;
+    protected CustomerRepository repository;
 
-    private CustomerDTO customerDTOIvan = new CustomerDTO("Ivan", "Here",
+    protected CustomerDTO customerDTOIvan = new CustomerDTO("Ivan", "Here",
             new Contact("kfsgkhgf@gmail.com", "858658587658"),
             new Address("Belgium", "Brussels", "1188", 5));
 
-    private CustomerDTO customerDTOJon = new CustomerDTO("Jon", "There",
+    protected CustomerDTO customerDTOJon = new CustomerDTO("Jon", "There",
             new Contact("jon@gmail.com", "8658587658"),
             new Address("Belgium", "Brussels", "1188", 6));
 
-
-/*
     @Test
     void getCustomerByIdAsAdmin() {
 
@@ -53,7 +52,7 @@ class CustomerIntegrationTest {
                 .header(new Header("token", "admin"))
                 .when()
                 .port(port)
-                .get("customer/0")
+                .get("customer/"+customerIvan.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -63,7 +62,9 @@ class CustomerIntegrationTest {
         Assertions.assertThat(toVerify).isEqualTo(customerDTOIvan);
 
     }
-*/
+
+
+
     @Test
     void whenThereIsNoCustomer_getCustomerByIdAsAdmin() {
 
